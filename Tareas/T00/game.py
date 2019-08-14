@@ -53,14 +53,19 @@ def menuPrincipal(resp):
         
         tabla = crearTablero(int(n) , int(m))
         
-        tablero.print_tablero(tabla)
+        # tablero.print_tablero(tabla)
         
         numLegos = math.ceil(int(n) * int(m) * parametros.PROB_LEGO)
-        print(numLegos)
-        for k in range(numLegos):
+        # print(numLegos)
+        k = 0
+        while k < numLegos:
             num1 = random.randint(0, int(n) - 1)
             num2 = random.randint(0, int(m) - 1)
-            tabla[num1][num2] = 'L'
+            if tabla[num1][num2] == 'L':
+                pass
+            else:
+                tabla[num1][num2] = 'L'
+                k += 1
 
         tablero.print_tablero(tabla)
 
