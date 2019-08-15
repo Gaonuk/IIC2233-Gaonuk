@@ -85,7 +85,7 @@ Lo importante es que expliquen qué hace la función y que si saben que alguna p
 ## Referencias de código externo :book:
 
 Para realizar mi tarea saqué código de:
-1. (link de código): este hace X cosa y está implementado en el archivo (nombre.py) en las líneas (número de líneas) y hace (explicación breve de que hace)
+1. https://stackoverflow.com/questions/306400/how-to-randomly-select-an-item-from-a-list: este hace X cosa y está implementado en el archivo (game.py) en las líneas 55-60 y hace (explicación breve de que hace)
 
 
 

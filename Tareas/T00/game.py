@@ -1,5 +1,5 @@
 # Modulos importados 
-import tablero
+import tablero 
 import parametros
 import os 
 import random 
@@ -7,20 +7,19 @@ import math
 
 
 def crearTablero(n, m):
-    ancho = []
-    for l in range(m):
-        ancho.append(' ')
-    tablero = []
-    for a in range(n):
-        tablero.append(ancho)
-    return tablero
+    largo = [[' ' for x in range(m)] for x in range(n)]
+    return largo
+
 
 def printMenu():
-    print('Seleccione una opcion:')
-    print('[1] Crear partida')
-    print('[2] Cargar partida')
-    print('[3] Ver ranking')
-    print('[0] Salir')
+    print('*******************************************************')
+    print('            BIENVENIDO A LEGOSWEEPER!                  ')
+    print('*******************************************************')
+    print(' Seleccione una opcion:')
+    print('     [1] Crear partida')
+    print('     [2] Cargar partida')
+    print('     [3] Ver ranking')
+    print('     [0] Salir')
     resp = input('Indique su resp (0, 1, 2 o 3):  ')
     return resp 
 
@@ -56,18 +55,17 @@ def menuPrincipal(resp):
         # tablero.print_tablero(tabla)
         
         numLegos = math.ceil(int(n) * int(m) * parametros.PROB_LEGO)
-        # print(numLegos)
-        k = 0
-        while k < numLegos:
-            num1 = random.randint(0, int(n) - 1)
-            num2 = random.randint(0, int(m) - 1)
-            if tabla[num1][num2] == 'L':
-                pass
+        i = 0
+        while i < numLegos:
+            n1 = random.randrange(len(tabla))
+            n2 = random.randrange(len(tabla[0]))
+            if tabla[n1][n2] != 'L':
+                tabla[n1][n2] = 'L'
+                i += 1
             else:
-                tabla[num1][num2] = 'L'
-                k += 1
-
-        tablero.print_tablero(tabla)
+                pass
+        
+        printJuego(tabla)
 
     elif resp == '2':
         return 2
@@ -78,8 +76,27 @@ def menuPrincipal(resp):
         menuPrincipal(resp)
 
 
-def menuJuego():
-    print('')
+def printJuego(tabla):
+    tablero.print_tablero(tabla)
+    print('Seleccione una de las siguientes acciones:')
+    print(' [1] Descubrir una baldosa')
+    print(' [2] Guardar la partida')
+    print(' [0] Salir de la partida')
+    opcion = input('Indique su opcion (0, 1 o 2):  ')
+    if opcion.isdigit():
+        mainJuego(tabla, opcion)
+    else:
+        print('Respuesta Invalida!')
+        printJuego(tabla)
+
+
+def mainJuego(tabla, opcion):
+    if opcion == '1':
+        pass
+    elif opcion == '2':
+        pass
+    else:
+        pass
 
 
 if __name__ == "__main__":
