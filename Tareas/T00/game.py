@@ -92,7 +92,7 @@ def menuPrincipal(resp):
                     baldosasVacias += 1
 
 
-        tablero.print_tablero(tabla)
+        
         printJuego(tablaUsuario, tabla)
 
 
