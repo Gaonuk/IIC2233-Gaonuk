@@ -1,6 +1,6 @@
 *.json
 *.txt
-tablero.py
-parametros.py
+/tablero.py
+/parametros.py
 __pycache__/
 .vscode/
