@@ -33,10 +33,10 @@ def printMenu():
     print('     [3] Ver ranking     \n')
     print('     [0] Salir           \n')
     resp = input('Indique su resp (0, 1, 2 o 3):  ')
-    return resp 
+    menuPrincipal(resp) 
 
 
-
+# Funcion que habilita el menu principal 
 def menuPrincipal(resp): 
     global numLegos
     global baldosasVacias
@@ -99,7 +99,7 @@ def menuPrincipal(resp):
     elif resp == '2':
         return 2
     elif resp == '3':
-        return 3
+        checkPuntajes()
     else:
         resp = input('Respuesta invalida! Por favor indique una nueva opcion: \n')
         menuPrincipal(resp)
@@ -284,8 +284,11 @@ def mainJuego(tablaUsuario, opcion, mainTabla):
                 
     elif opcion == '2':
         pass
+    elif opcion == '0':
+        printMenu()
     else:
-        pass
+        print('Respuesta invalida.')
+        printJuego(tablaUsuario, mainTabla)
 
 
 def victoria():
@@ -308,14 +311,42 @@ def gameOver(tabla):
     puntaje = numLegos * baldDesc * parametros.POND_PUNT
     print('Puntaje final : ' + str(puntaje))
     rank = open('puntajes.txt', 'a')
-    
+    partida = usuario + ',' + ' ' + 'Puntaje:' + ' ' + str(puntaje) + ' \n'
+    rank.write(partida) 
 
 def checkPuntajes():
-    pass
+    listado = open('puntajes.txt', 'r')
+    listPuntajes = []
 
+    for l in listado:
+        listPuntajes.append(l.split(' '))
+
+    if len(listPuntajes) == 0:
+        print('Aun no hay puntajes en el ranking! Comienza una partida!')
+    
+    else:
+        listPuntajes.sort(reverse=True, key=lambda x: int(x[2]))
+        n = 1
+        print('Los diez mejores puntajes son:\n ')
+        if len(listPuntajes) >= 10:
+            i = 0
+            while i < 10:
+                rank = str(n) + ':' + ' ' + listPuntajes[i][0] + ' ' + listPuntajes[i][1] + ' ' + listPuntajes[i][2] + '\n'
+                print(rank)
+                n += 1
+                i += 1
+        else:
+            for i in listPuntajes:
+                rank = str(n) + ':' + ' ' + i[0] + ' ' + i[1] + ' ' + i[2] + '\n'
+                print(rank)
+                n += 1
+        
+        
+
+    
 
 if __name__ == "__main__":
-    opcion = printMenu()
-    menuPrincipal(opcion)
+    printMenu()
+
 
         
