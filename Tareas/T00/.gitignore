@@ -3,4 +3,4 @@
 /tablero.py
 /parametros.py
 __pycache__/
-.vscode/
+*.vscode
