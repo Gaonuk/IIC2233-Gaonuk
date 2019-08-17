@@ -299,6 +299,9 @@ def victoria():
     print('Has descubierto todas las baldosas vacias! Felicidades ' + usuario + ' has ganado!')
     puntaje = numLegos * baldosasVacias * parametros.POND_PUNT
     print('Puntaje final: ' + str(puntaje))
+    rank = open('puntajes.txt', 'a')
+    partida = usuario + ',' + ' ' + 'Puntaje:' + ' ' + str(puntaje) + ' \n'
+    rank.write(partida)
 
 
 def gameOver(tabla):                   
