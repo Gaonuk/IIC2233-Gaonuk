@@ -14,6 +14,10 @@
 
 * En el codigo veran que tengo otras librerias implementadas como ```os``` y ```sys``` pero al no implementar las funciones de cargar y guardar partida no las utilice
 
+* El calculo de los Legos esta implementado en la linea 77. El calculo del puntaje final esta en las lineas 314 y 300
+
+* Importe los modulos entregados en las lineas 2 y 3 y los utilice en las lineas 77, 115, 300, 313 y 314
+
 ### Cosas implementadas y no implementadas :white_check_mark: :x:
 
 
