@@ -1,4 +1,4 @@
-# Tarea 0: LegoSweeper :school_satchel:
+# Tarea 0: LegoSweeper 
 
 ## Consideraciones generales :octocat:
 
