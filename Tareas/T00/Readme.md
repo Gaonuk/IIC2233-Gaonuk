@@ -2,7 +2,11 @@
 
 ## Consideraciones generales :octocat:
 
-* El juego funciona en su mayoria, a veces cuando pierdes la partida en la primera baldosa que tratas de descubrir hay un bug que te pide de nuevo coordenadas para descubrir una baldosa, pero me sucedio solo 2 veces de todas las simulaciones que hice. Ademas en el menu de juego te permite volver al menu principal, esto sin guardar la partida.
+* El juego funciona en su mayoria, al comenzar la partida se crean 2 tableros, uno con la informacion de los Legos y el otro que es el que se le muestra al usuario. 
+
+* A veces cuando pierdes la partida en la primera baldosa que tratas de descubrir hay un bug que te pide de nuevo coordenadas para descubrir una baldosa, pero me sucedio solo 2 veces de todas las simulaciones que hice.
+
+* En el menu de juego te permite volver al menu principal, esto sin guardar la partida.
 
 * No implemente los mecanismos de guardar y cargar partida
 
@@ -19,10 +23,12 @@
     * Parte Ver Rankings: Hecha completa
     * Parte Salir: Hecha completa
 
-* Parte <X<sub>3</sub>>: Me faltó hacer la funcionalidad de guardar partida
+* Parte Menu Juego: Me faltó hacer la funcionalidad de guardar partida
     * Parte Descubrir Baldosa: Hecha completa
     * Parte Guardar Partida: No hecha
     * Parte Salir de la Partida: Me faltó hacer que se le pregunte al usuario si quiere guardar o no la partida antes de salir.
+
+* Bonus: No realizado
 
 
 ## Ejecución :computer:
