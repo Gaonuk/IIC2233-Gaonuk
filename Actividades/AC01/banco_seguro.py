@@ -51,10 +51,6 @@ class ClienteSeguro(Cliente):
         '''
 
         if not self.tiene_fraude:
-            # Aqui pongo un pass dado que no se indica nada que hacer en caso 
-            # de que el Cliente sea fraudulento
-            pass
-        else:
             self.retirar(dinero)
             self.saldo_actual = self.saldo_actual
             ruta_transacciones = path.join('banco_seguro', 'transacciones.txt')

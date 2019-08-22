@@ -41,6 +41,11 @@ banco_dcc_seguro.validar_monto_clientes(path.join('banco_seguro', 'clientes.txt'
 
 # Llego la hora de desenmascarar a los tramposos
 print('Los clientes tramposos son:')
-for cliente in banco_dcc_seguro.clientes:
-    if cliente.tiene_fraude:
-        print(cliente)
+ruta = 'resultados.txt'
+with open(ruta, 'a', encoding="utf-8") as archivo:
+	for cliente in banco_dcc_seguro.clientes:
+		if cliente.tiene_fraude:
+			resultado = cliente.id_cliente + ',' + cliente.nombre + ',' + str(cliente.saldo_actual) \
+            	+ ',' + str(cliente.contrasena) + '\n'
+			archivo.write(resultado)
+			print(cliente)
