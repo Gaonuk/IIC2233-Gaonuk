@@ -92,8 +92,8 @@ class BancoSeguroDCC(BancoDCC):
     def verificar_historial_transacciones(self, historial):
         print('Validando transacciones')
         for transaccion in historial:
+            id_cliente, accion, monto = transaccion.split(',')
             for cliente in self.clientes:
-                id_cliente, accion, monto = transaccion.split(',')
                 if id_cliente == cliente.id_cliente:
                     if monto > cliente.saldo_actual and accion == 'retirar':
                         cliente.tiene_fraude = True
@@ -101,4 +101,10 @@ class BancoSeguroDCC(BancoDCC):
 
     def validar_monto_clientes(self, ruta):
         print('Validando monto de los clientes')
-        
+        with open(ruta, 'r', encoding="utf-8") as file:
+            for line in file:
+                id_cliente, accion, monto, contrasena = line.split(',')
+                for cliente in self.clientes:
+                    if id_cliente == cliente.id_cliente:
+                        if monto != cliente.saldo_actual:
+                            cliente.tiene_fraude = True
