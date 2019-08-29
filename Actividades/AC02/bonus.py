@@ -33,6 +33,7 @@ def cargar_llaves(ruta_archivo_llaves):
 
 def desbloquear_pisos(llaves, piso):
     if llaves[piso] == TECH_KEYS[piso]:
+        print('Haz desbloqueado el siguiente piso!')
         return True
     else:
         return False
