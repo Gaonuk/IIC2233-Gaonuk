@@ -27,8 +27,23 @@ Aquí debes completar las funciones propias de Acciones en DCCampal
 
 
 def distraer(alumno, ayudante):
-    # Completar
-    pass
+    distraccion = []
+    for habilidad in alumno.habilidades:
+        for deb in ayudante.debilidades:
+            if habilidad == deb:
+                distraccion.append(habilidad)
+    for n in distraccion:
+        alumno.habilidades.discard(n)
+
+    if len(distraccion) == 1:
+        ayudante.comiendo.append(distraccion[0])
+        return True
+    elif len(distraccion) == 0:
+        return False
+    elif len(distraccion) > 1:
+        elemento = random.sample(distraccion, 1)[0]
+        ayudante.comiendo.append(elemento)
+        return True
 
 
 def simular_batalla(alumnos, ayudantes):
@@ -46,24 +61,31 @@ def simular_batalla(alumnos, ayudantes):
     while PISOS and alumnos:
         # Mientras queden pisos y alumnos para distraer
         piso_actual = PISOS[0]
-        ayudantes_del_piso = None  # Debes obtener los ayudantes del piso
+        ayudantes_del_piso = ayudantes[PISOS[0]]  # Debes obtener los ayudantes del piso
         while ayudantes_del_piso:
             # Mientras hayan ayudantes en el piso
-            ayudante_defensor = None  # Debes obtener el ayudante que le toca defender
-            alumno_atacante = None  # Debes obtener el alumno que le toca distraer
+            ayudante_defensor = ayudantes_del_piso.popleft()  # Debes obtener el ayudante que le toca defender
+            alumno_atacante = alumnos.pop()  # Debes obtener el alumno que le toca distraer
             while not distraer(alumno_atacante, ayudante_defensor):
                 # Si no se logró distraer el ayudante con el alumno actual,
                 # se debe mandar a la casa al alumno
                 # Si quedan alumnos, intentamos con otro alumno,
                 # si no, no po
-                pass
+                if len(alumnos) > 0:
+                    alumno_atacante = alumnos.pop()
+                else:
+                    break
+
             # O se acabaron los alumnos, o se logró distraer al ayudante
             if not alumnos:
                 # Si no quedan alumnos, no podemos distraer ayudantes
                 break
             elif ayudante_defensor.comiendo:
-                # Si el ayudante fue distraido, hay que cambiar al siguiente ayudante
-                pass
+                if len(ayudantes_del_piso) > 0:
+                    ayudante_defensor = ayudantes_del_piso.popleft()
+                else:
+                    break
+
         if not ayudantes_del_piso:
             # Si no quedan ayudantes, avanzamos de piso
             PISOS.popleft()

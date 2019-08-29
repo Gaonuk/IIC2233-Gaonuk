@@ -22,11 +22,14 @@ def resumen_actual(ayudantes, alumnos):
 
 def stock_comida(alumnos):
     stock = []
-    comidas = defaultdict(int)
+    comidas = dict()
 
     for alumno in alumnos:
-        for comida in alumnos[1]:
-            comidas[comida] += 1
+        for comida in alumno.habilidades:
+            habilidad = comida
+            if habilidad not in comidas:
+                comidas[habilidad] = 0
+            comidas[habilidad] += 1
 
     for par in comidas.items():
         stock.append(par)
