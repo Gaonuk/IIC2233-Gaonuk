@@ -12,6 +12,7 @@ import random
 from collections import deque
 from cargar_datos import cargar_alumnos, cargar_ayudantes
 from consultas import resumen_actual, stock_comida
+from bonus import desbloquear_pisos, cargar_llaves
 
 
 
@@ -46,7 +47,7 @@ def distraer(alumno, ayudante):
         return True
 
 
-def simular_batalla(alumnos, ayudantes):
+def simular_batalla(alumnos, ayudantes, llaves):
     """
     El malvado PhD. Pinto ha borrado todo el código de esta función,
     pero ha decidido dejar unas cuantas línea de la simulación
@@ -88,7 +89,10 @@ def simular_batalla(alumnos, ayudantes):
 
         if not ayudantes_del_piso:
             # Si no quedan ayudantes, avanzamos de piso
-            PISOS.popleft()
+            if desbloquear_pisos(llaves, PISOS[0]):
+                PISOS.popleft()
+            else:
+                break
         resumen_actual(ayudantes, alumnos)
 
     if not PISOS:
@@ -99,9 +103,10 @@ def simular_batalla(alumnos, ayudantes):
     stock = stock_comida(alumnos)
     print('Tras  la batalla, aquí va el catastro de las de las habilidades de los alumnos:')
     print(stock)
-
+    
 
 if __name__ == '__main__':
     alumnos = cargar_alumnos(os.path.join('bases_datos', 'alumnos.csv'))
     ayudantes = cargar_ayudantes(os.path.join('bases_datos', 'ayudantes.csv'))
-    simular_batalla(alumnos, ayudantes)
+    llaves = cargar_llaves(os.path.join('bases_datos', 'tech_keys.csv'))
+    simular_batalla(alumnos, ayudantes, llaves)

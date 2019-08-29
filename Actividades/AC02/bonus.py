@@ -16,9 +16,25 @@ TECH_KEYS = {
 
 def cargar_llaves(ruta_archivo_llaves):
     print(f"Cargando datos de {ruta_archivo_llaves}...")
-    # Completar
+    llaves = {
+        'Piso -1': '',
+        'Piso -2': '',
+        'Piso -3': '',
+        'Piso -4': ''
+    }
+    with open(ruta_archivo_llaves, 'r', encoding='utf-8') as archivo:
+        for line in archivo:
+            piso, llave = line.split(';')
+            combinacion = llave.strip().split(',')
+            llaves[piso] = combinacion
+    
+    return llaves
 
 
 def desbloquear_pisos(llaves, piso):
-    # Completar
-    pass
+    if llaves[piso] == TECH_KEYS[piso]:
+        return True
+    else:
+        return False
+    
+
