@@ -29,9 +29,9 @@ def desencriptar(funcion_decodificadora, tipo_archivo):
             atributos_desencriptados = []
             for i in linea:
                 atributos_desencriptados.append(funcion_decodificadora(i))
-            args = tuple(atributos_desencriptados)   
+              
             if tipo_archivo == 'canciones':
-                cancion = Cancion(atributos_desencriptados)
+                cancion = Cancion(*atributos_desencriptados)
                 yield cancion
             elif tipo_archivo == 'artistas':
                 artista = Artista(atributos_desencriptados)
