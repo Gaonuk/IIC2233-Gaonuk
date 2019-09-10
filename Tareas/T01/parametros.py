@@ -216,3 +216,10 @@ DMG_CAPARAZON = None
 
 # Relámpago
 SPD_RELAMPAGO = None
+
+
+
+
+
+#Dinero Inicial de los Pilotos creados
+DINERO_INI = 500

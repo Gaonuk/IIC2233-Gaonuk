@@ -11,6 +11,12 @@ Un buen ```README.md``` no tiene por que ser muy extenso tampoco, hay que ser **
 
 ## Consideraciones generales :octocat:
 
+* Considere que cuando alguien quiere salir de una partida y no ha guardado la partida, el juego le va a preguntar si es que quiere guardar y salir o salir sin guardar.
+
+* Como en ningun lado aparecia algo sobre le dinero inicial de un piloto, decidi darles un dinero inicial de $500
+
+* 
+
 <Descripción de lo que hace y que **_no_** hace la tarea que entregaron junto
 con detalles de último minuto y consideraciones como por ejemplo cambiar algo
 en cierta línea del código o comentar una función>
