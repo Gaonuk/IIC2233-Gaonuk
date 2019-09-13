@@ -1,22 +1,19 @@
-class Piloto:
-    def __init__(self, nombre, saldo, personalidad, contextura ,
-         equilibrio, experiencia, equipo):
-        self._nombre = nombre
-        self._saldo = saldo
-        self._personalidad = personalidad
-        self._experiencia = experiencia
-        self._contextura = contextura
-        self._equilibrio = equilibrio
-        self._equipo = equipo
+from abstracts import Persona
+
+
+class Piloto(Persona):
+    def __init__(self, nombre, dinero, personalidad, contextura, equilibrio, experiencia, equipo):
+        super().__init__(nombre, personalidad, contextura, equilibrio, experiencia, equipo)
+        self._dinero = dinero
 
 
     @property
-    def saldo(self):
-        return self._saldo
+    def dinero(self):
+        return self._dinero
 
-    @saldo.setter
-    def set_saldo(self, saldo):
-        self.saldo = saldo
+    @dinero.setter
+    def set_dinero(self, dinero):
+        self.dinero = dinero
 
     @property
     def experiencia(self):
@@ -44,7 +41,16 @@ class Piloto:
 - Equilibro: {4}\n \
 - Experiencia: {5}\n \
 - Equipo: {6}\n \
-            '.format(self._nombre, self.saldo, 
+            '.format(self._nombre, self.dinero, 
             self._personalidad, self.contextura, 
             self._equilibrio, self.experiencia, 
             self._equipo)
+
+
+
+
+class Contrincante(Persona):
+    def __init__(self, nombre, nivel, personalidad, contextura, equilibrio, experiencia, equipo):
+        super().__init__(nombre, personalidad, contextura, equilibrio, experiencia, equipo)
+        self._nivel = nivel
+        

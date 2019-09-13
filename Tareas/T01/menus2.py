@@ -1,7 +1,5 @@
-from menus1 import *
-from menus3 import Menu
-
-
+from abstracts import Menu
+import menus1
 class MenuPrincipal(Menu):
     def __init__(self, piloto):
         super().__init__()
@@ -23,7 +21,7 @@ class MenuPrincipal(Menu):
 
 
     def volver_menu(self):
-        menu_sesion = MenuSesion()
+        menu_sesion = menus1.MenuSesion()
         menu_sesion.menu()
 
 
@@ -70,6 +68,7 @@ class MenuCompras(Menu):
 
     def volver_menu(self):
         menu = MenuPrincipal(self.piloto)
+        
 
         
     def menu(self):

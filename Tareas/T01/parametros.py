@@ -143,36 +143,36 @@ MEJORAS = {
 EQUIPOS = {
     'TAREOS': {
         'CONTEXTURA': {
-            'MIN': None,
-            'MAX': None
+            'MIN': 26,
+            'MAX': 45
         },
         'EQUILIBRIO': {
-            'MIN': None,
-            'MAX': None
+            'MIN': 36,
+            'MAX': 55
         },
-        'PERSONALIDAD': None
+        'PERSONALIDAD': 'precavido'
     },
     'HIBRIDOS': {
         'CONTEXTURA': {
-            'MIN': None,
-            'MAX': None
+            'MIN': 35,
+            'MAX': 54
         },
         'EQUILIBRIO': {
-            'MIN': None,
-            'MAX': None
+            'MIN': 20,
+            'MAX': 34
         },
-        'PERSONALIDAD': None
+        'PERSONALIDAD': ['precavido', 'osado']
     },
     'DOCENCIOS': {
         'CONTEXTURA': {
-            'MIN': None,
-            'MAX': None
+            'MIN': 44,
+            'MAX': 60
         },
         'EQUILIBRIO': {
-            'MIN': None,
-            'MAX': None
+            'MIN': 4,
+            'MAX': 10
         },
-        'PERSONALIDAD': None
+        'PERSONALIDAD': 'osado'
     }
 }
 

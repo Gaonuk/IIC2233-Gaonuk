@@ -1,5 +1,8 @@
-#Creacion de clases 
-class Menu():
+from abc import ABC
+
+#Este archivo contiene todas las clases abstractas
+
+class Menu(ABC):
     def __init__(self):
         self._menu =    "    ____            _            _             __           ____  \n" + \
                         "   /  _/   ____    (_)  _____   (_)  ____ _   / /          / __ \ \n" + \
@@ -12,3 +15,25 @@ class Menu():
     def recibir_input(self):
         inpt = input('Por favor, indique su respuesta: (0 para salir) ')
         return inpt
+
+
+
+class Vehiculo(ABC):
+    def __init__(self, nombre, dueno, chasis, carroceria, ruedas):
+        self._nombre = nombre
+        self._dueno = dueno
+        self._chasis = chasis
+        self._carroceria = carroceria
+        self._ruedas = ruedas
+
+
+
+class Persona(ABC):
+    def __init__(self, nombre, personalidad, contextura ,
+         equilibrio, experiencia, equipo):
+        self._nombre = nombre
+        self._personalidad = personalidad
+        self._experiencia = experiencia
+        self._contextura = contextura
+        self._equilibrio = equilibrio
+        self._equipo = equipo
