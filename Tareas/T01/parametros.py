@@ -5,109 +5,109 @@ import os
 
 AUTOMOVIL = {
     'CHASIS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 200,
+        'MAX': 400
     },
     'CARROCERIA': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 150,
+        'MAX': 400
     },
     'RUEDAS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 38,
+        'MAX': 70
     },
     'MOTOR': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 100,
+        'MAX': 400
     },
     'ZAPATILLAS': {
         'MIN': None,
         'MAX': None
     },
     'PESO': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 600,
+        'MAX': 1000
     }
 }
 
 TRONCOMOVIL = {
     'CHASIS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 90,
+        'MAX': 120
     },
     'CARROCERIA': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 80,
+        'MAX': 120
     },
     'RUEDAS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 35,
+        'MAX': 60
     },
     'MOTOR': {
         'MIN': None,
         'MAX': None
     },
     'ZAPATILLAS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 80,
+        'MAX': 120
     },
     'PESO': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 100,
+        'MAX': 370
     }
 }
 
 MOTOCICLETA = {
     'CHASIS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 60,
+        'MAX': 90
     },
     'CARROCERIA': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 35,
+        'MAX': 75
     },
     'RUEDAS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 15,
+        'MAX': 45
     },
     'MOTOR': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 30,
+        'MAX': 55
     },
     'ZAPATILLAS': {
         'MIN': None,
         'MAX': None
     },
     'PESO': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 90,
+        'MAX': 200
     }
 }
 
 BICICLETA = {
     'CHASIS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 20,
+        'MAX': 40
     },
     'CARROCERIA': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 10,
+        'MAX': 30
     },
     'RUEDAS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 1,
+        'MAX': 20
     },
     'MOTOR': {
         'MIN': None,
         'MAX': None
     },
     'ZAPATILLAS': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 20,
+        'MAX': 40
     },
     'PESO': {
-        'MIN': None,
-        'MAX': None
+        'MIN': 30,
+        'MAX': 60
     }
 }
 

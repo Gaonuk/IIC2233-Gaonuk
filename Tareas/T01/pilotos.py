@@ -1,6 +1,7 @@
 from abstracts import Persona
 
 
+
 class Piloto(Persona):
     def __init__(self, nombre, dinero, personalidad, contextura, equilibrio, experiencia, equipo):
         super().__init__(nombre, personalidad, contextura, equilibrio, experiencia, equipo)

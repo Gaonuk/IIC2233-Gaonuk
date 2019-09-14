@@ -1,5 +1,4 @@
 from abc import ABC
-
 #Este archivo contiene todas las clases abstractas
 
 class Menu(ABC):
@@ -19,12 +18,13 @@ class Menu(ABC):
 
 
 class Vehiculo(ABC):
-    def __init__(self, nombre, dueno, chasis, carroceria, ruedas):
+    def __init__(self, nombre, dueno, chasis, carroceria, ruedas, peso):
         self._nombre = nombre
         self._dueno = dueno
         self._chasis = chasis
         self._carroceria = carroceria
         self._ruedas = ruedas
+        self._peso = peso
 
 
 
@@ -37,3 +37,4 @@ class Persona(ABC):
         self._contextura = contextura
         self._equilibrio = equilibrio
         self._equipo = equipo
+        self.vehiculos = []

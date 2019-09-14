@@ -10,7 +10,7 @@ import menus2
 class MenuSesion(Menu):
     def __init__(self):
         super().__init__()
-        self.principal = menus2.MenuPrincipal()
+
         
 
     def crear_vehiculo(self, dueno):
@@ -41,9 +41,9 @@ class MenuSesion(Menu):
                 return vehiculo
 
             else:
-                tipo = input('Por favor indique el tipo de vehiculo que desea:  ')
+                tipo = input('Por favor indique el tipo de vehiculo \
+que desea (no ingrese acentos):  ')
                 tipo_mayus = tipo.upper()
-                print(tipo_mayus)
                 if not tipo_mayus in ['TRONCOMOVIL', 'BICICLETA', 
                     'MOTOCICLETA','AUTOMOVIL']:
                     print('Tipo de vehiculo invalido')
@@ -51,19 +51,86 @@ class MenuSesion(Menu):
                     return vehiculo 
                 else:
                     if tipo_mayus == 'TRONCOMOVIL':
-                        
-                        vehiculo = Troncomovil()
 
+                        chasis = randint(TRONCOMOVIL['CHASIS']['MIN'], 
+                            TRONCOMOVIL['CHASIS']['MAX'])
+
+                        carroceria = randint(TRONCOMOVIL['CARROCERIA']['MIN'],
+                            TRONCOMOVIL['CARROCERIA']['MAX'])
+
+                        ruedas = randint(TRONCOMOVIL['RUEDAS']['MIN'],
+                            TRONCOMOVIL['RUEDAS']['MAX'])
+
+                        zapatillas = randint(TRONCOMOVIL['ZAPATILLAS']['MIN'],
+                            TRONCOMOVIL['ZAPATILLAS']['MAX'])
+
+                        peso = randint(TRONCOMOVIL['PESO']['MIN'],
+                            TRONCOMOVIL['PESO']['MAX'])
+
+                        vehiculo = Troncomovil(nom_vehiculo, dueno, 
+                            chasis, carroceria, ruedas, zapatillas, peso)
                         return vehiculo
+
                     elif tipo_mayus == 'MOTOCICLETA':
-                        vehiculo = Motocicleta()
+
+                        chasis = randint(MOTOCICLETA['CARROCERIA']['MIN'],
+                            MOTOCICLETA['CARROCERIA']['MAX'])
+
+                        carroceria = randint(MOTOCICLETA['CARROCERIA']['MIN'],
+                            MOTOCICLETA['CARROCERIA']['MAX'])
+
+                        ruedas = randint(MOTOCICLETA['RUEDAS']['MIN'],
+                            MOTOCICLETA['RUEDAS']['MAX'])
+
+                        motor = randint(MOTOCICLETA['MOTOR']['MIN'],
+                            MOTOCICLETA['MOTOR']['MAX'])
+
+                        peso = randint(MOTOCICLETA['PESO']['MIN'],
+                            MOTOCICLETA['PESO']['MAX'])
+
+                        vehiculo = Motocicleta(nom_vehiculo, dueno, 
+                            chasis, carroceria, ruedas, motor, peso)
                         return vehiculo
 
                     elif tipo_mayus == 'BICICLETA':
-                        vehiculo = Bicicleta()
+                        
+                        chasis = randint(BICICLETA['CHASIS']['MIN'], 
+                            BICICLETA['CHASIS']['MAX'])
+
+                        carroceria = randint(BICICLETA['CARROCERIA']['MIN'],
+                            BICICLETA['CARROCERIA']['MAX'])
+
+                        ruedas = randint(BICICLETA['RUEDAS']['MIN'],
+                            BICICLETA['RUEDAS']['MAX'])
+
+                        zapatillas = randint(BICICLETA['ZAPATILLAS']['MIN'],
+                            BICICLETA['ZAPATILLAS']['MAX'])
+
+                        peso = randint(BICICLETA['PESO']['MIN'],
+                            BICICLETA['PESO']['MAX'])
+
+                        vehiculo = Bicicleta(nom_vehiculo, dueno, 
+                            chasis, carroceria, ruedas, zapatillas, peso)
                         return vehiculo
                     else:
-                        vehiculo = Automovil()
+
+                        chasis = randint(AUTOMOVIL['CARROCERIA']['MIN'],
+                            AUTOMOVIL['CARROCERIA']['MAX'])
+
+                        carroceria = randint(AUTOMOVIL['CARROCERIA']['MIN'],
+                            AUTOMOVIL['CARROCERIA']['MAX'])
+
+                        ruedas = randint(AUTOMOVIL['RUEDAS']['MIN'],
+                            AUTOMOVIL['RUEDAS']['MAX'])
+
+                        motor = randint(AUTOMOVIL['MOTOR']['MIN'],
+                            AUTOMOVIL['MOTOR']['MAX'])
+
+                        peso = randint(AUTOMOVIL['PESO']['MIN'],
+                            AUTOMOVIL['PESO']['MAX'])
+
+                        vehiculo = Automovil(nom_vehiculo, dueno, 
+                            chasis, carroceria, ruedas, motor, peso)
                         return vehiculo
 
 
@@ -117,7 +184,7 @@ class MenuSesion(Menu):
                     piloto_nuevo = Piloto(nom_usuario, 
                             dinero, personalidad, contextura, 
                             equilibrio, exp, equipo)
-                    print(piloto_nuevo)
+
                     return piloto_nuevo
 
 
@@ -131,7 +198,7 @@ class MenuSesion(Menu):
             for m in molde:
                 orden[m] = molde.index(m)
             lista[orden['Nombre']] = piloto._nombre
-            lista[orden['Dinero']] = piloto.saldo            
+            lista[orden['Dinero']] = piloto.dinero            
             lista[orden['Personalidad']] = piloto._personalidad            
             lista[orden['Contextura']] = piloto.contextura            
             lista[orden['Equilibrio']] = piloto._equilibrio            
@@ -145,23 +212,50 @@ class MenuSesion(Menu):
                     pass
                 else:
                     linea += ','
-            print(linea)
             archivo.write(linea)
 
 
         vehiculo = self.crear_vehiculo(piloto._nombre)
-        self.ir_menu(piloto, vehiculo)
+
+        lista2 = ['']*8
+        orden2 = defaultdict(int)
+        with open(PATHS['VEHICULOS'], 'r+', encoding='utf-8') as archivo:
+            molde = archivo.readline()
+            molde = molde.strip().split(',')
+            for m in molde:
+                orden2[m] = molde.index(m)
+            lista2[orden2['Nombre']] = vehiculo._nombre
+            lista2[orden2['Dueño']] = vehiculo._dueno            
+            lista2[orden2['Categoría']] = vehiculo.categoria            
+            lista2[orden2['Chasis']] = vehiculo._chasis           
+            lista2[orden2['Carrocería']] = vehiculo._carroceria            
+            lista2[orden2['Ruedas']] = vehiculo._ruedas
+            if vehiculo.categoria in ['bicicleta', 'troncomóvil']:
+                lista2[orden2['Motor o Zapatillas']] = vehiculo._zapatillas
+            else:
+                lista2[orden2['Motor o Zapatillas']] = vehiculo._motor
+            lista2[orden2['Peso']] = vehiculo._peso
+            linea = '\n'
+            for l in lista2:
+                
+                linea += str(l)
+                if l == lista2[len(lista2)-1]:
+                    pass
+                else:
+                    linea += ','
+            archivo.write(linea)
+
+        piloto.vehiculos.append(vehiculo)
+
+        self.ir_menu(piloto)
     
-    def ir_menu(piloto, vehiculo):
-        from menus2 import MenuPrincipal
-        menu = MenuPrincipal(piloto, vehiculo)
+    def ir_menu(self, piloto):
+        menu = menus2.MenuPrincipal(piloto)
         menu.menu()
  
     def cargar_partida(self):
-        from menus2 import MenuPrincipal
         piloto = self.cargar_piloto()
-        menu = MenuPrincipal(piloto)
-        menu.menu()
+        self.ir_menu(piloto)
 
 
 
