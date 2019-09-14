@@ -64,15 +64,17 @@ class MenuPreparacion(Menu):
             print(p.nombre)
             lista_nombres.append(p.nombre)
 
-        pista_sel = input('Indique el nombre de la pista:   ')
-        
-        if not pista_sel in lista_nombres:
+        inpt = self.recibir_input()
+        if inpt == '0':
+            self.volver_menu()
+
+        elif not inpt in lista_nombres:
             print('Nombre de pista invalido, por favor intente nuevamente')
             self.menu()
-
+        
         else:
             for p in self.pistas:
-                if p.nombre == pista_sel:
+                if p.nombre == inpt:
                     pista_jugar = p
 
             print('Por favor indique el vehiculo que desea usar en la carrera')
@@ -81,19 +83,21 @@ class MenuPreparacion(Menu):
                 print(v)
                 lista_vehiculos.append(v.nombre)
 
-            vehi_sel = input('Indique el nombre del vehiculo:   ')
+            vehi_sel = self.recibir_input()
 
-            if not vehi_sel in lista_vehiculos:
+            if vehi_sel == '0':
+                self.volver_menu()
+
+            elif not vehi_sel in lista_vehiculos:
                 print('No tiene ningun vehiculo con ese nombre')
                 self.menu()
-            
             else:
                 for v in self.piloto.vehiculos:
                     if v.nombre == vehi_sel:
                         vehiculo_jugar = v
             
 
-            self.ir_menu(self.piloto, vehiculo_jugar, pista_jugar)
+                self.ir_menu(self.piloto, vehiculo_jugar, pista_jugar)
 
 
     def ir_menu(self, piloto, vehiculo, pista):
@@ -102,7 +106,9 @@ class MenuPreparacion(Menu):
 
 
             
-        
+    def volver_menu(self):
+        menu = menus2.MenuPrincipal(self.piloto)
+        menu.menu()
 
 
 
@@ -113,15 +119,22 @@ class MenuCarrera(Menu):
         self.vehiculo = vehiculo
         self.pista = pista
 
+    def ir_a_pits(self):
+        pits = MenuPits(self.piloto, self.vehiculo, self.pista)
+        pits.menu()
+
 
     def menu(self):
-        print()
-
+        while True:
+            print()
+            self.ir_a_pits()
 
 class MenuPits(Menu):
-    def __init__(self, piloto):
+    def __init__(self, piloto, vehiculo, pista):
         super().__init__()
         self.piloto = piloto
+        self.pista = pista
+        self.vehiculo = vehiculo
 
     def menu(self):
         print('Dinero disponible para reparaciones: {0}'.format(self.piloto.dinero))
@@ -130,10 +143,22 @@ class MenuPits(Menu):
         print('2) - Carroceria         $50')
         print('3) - Ruedas             $120')
         print('4) - Zapatillas         $270')
-
+    
         inpt = self.recibir_input()
 
         if inpt == '1':
             pass
         elif inpt == '2':
             pass
+        elif inpt == '3':
+            pass
+        elif inpt == '4':
+            pass
+        elif inpt == '0':
+            self.volver_carrera()
+
+    def volver_carrera(self):
+        pass
+
+    def hacer_mejora(self):
+        pass

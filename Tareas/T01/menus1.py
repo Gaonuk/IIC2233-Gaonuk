@@ -219,6 +219,7 @@ pertenecer (Tareos, Hibridos o Docencios ):  ')
  
     def cargar_partida(self):
         piloto = self.cargar_piloto()
+        self.cargar_vehiculos(piloto)
         if isinstance(piloto, Piloto):
             self.ir_menu(piloto)
         else:
@@ -252,7 +253,60 @@ pertenecer (Tareos, Hibridos o Docencios ):  ')
         print('No existe un piloto con ese nombre, por favor cree \
 una nueva partida.')
         
-            
+    def cargar_vehiculos(self, piloto):
+        orden = defaultdict(int)
+        with open(PATHS['VEHICULOS'], 'r', encoding='utf-8') as archivo:
+            molde = archivo.readline()
+            molde = molde.strip().split(',')
+            for m in molde:
+                orden[m] = molde.index(m)
+            for l in archivo:
+                vehiculo = l.strip().split(',')
+                if piloto.nombre == vehiculo[orden['Dueño']]:
+                    if vehiculo[orden['Categoría']] == 'troncomóvil':
+                        vehiculo_cargado = Troncomovil(
+                        vehiculo[orden['Nombre']], 
+                        vehiculo[orden['Dueño']],
+                        int(vehiculo[orden['Chasis']]), 
+                        int(vehiculo[orden['Carrocería']]), 
+                        int(vehiculo[orden['Ruedas']]), 
+                        int(vehiculo[orden['Motor o Zapatillas']]),
+                        int(vehiculo[orden['Peso']])
+                        )
+                        piloto.vehiculos.append(vehiculo_cargado)
+                    elif vehiculo[orden['Categoría']] == 'bicicleta':
+                        vehiculo_cargado = Bicicleta(
+                        vehiculo[orden['Nombre']], 
+                        vehiculo[orden['Dueño']],
+                        int(vehiculo[orden['Chasis']]), 
+                        int(vehiculo[orden['Carrocería']]), 
+                        int(vehiculo[orden['Ruedas']]), 
+                        int(vehiculo[orden['Motor o Zapatillas']]),
+                        int(vehiculo[orden['Peso']])
+                        )
+                        piloto.vehiculos.append(vehiculo_cargado)
+                    elif vehiculo[orden['Categoría']] == 'motocicleta':
+                        vehiculo_cargado = Motocicleta(
+                        vehiculo[orden['Nombre']], 
+                        vehiculo[orden['Dueño']],
+                        int(vehiculo[orden['Chasis']]), 
+                        int(vehiculo[orden['Carrocería']]), 
+                        int(vehiculo[orden['Ruedas']]), 
+                        int(vehiculo[orden['Motor o Zapatillas']]),
+                        int(vehiculo[orden['Peso']])
+                        )
+                        piloto.vehiculos.append(vehiculo_cargado)
+                    else:
+                        vehiculo_cargado = Automovil(
+                        vehiculo[orden['Nombre']], 
+                        vehiculo[orden['Dueño']],
+                        int(vehiculo[orden['Chasis']]), 
+                        int(vehiculo[orden['Carrocería']]), 
+                        int(vehiculo[orden['Ruedas']]), 
+                        int(vehiculo[orden['Motor o Zapatillas']]),
+                        int(vehiculo[orden['Peso']])
+                        )
+                        piloto.vehiculos.append(vehiculo_cargado)
 
     def salir(self):
         print('Se ha cerrado el juego exitosamente.')
