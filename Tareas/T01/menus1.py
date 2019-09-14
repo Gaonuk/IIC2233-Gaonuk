@@ -7,6 +7,7 @@ from abstracts import Menu
 from vehiculos import Troncomovil, Motocicleta, Bicicleta, Automovil
 import menus2
 
+
 class MenuSesion(Menu):
     def __init__(self):
         super().__init__()
@@ -15,177 +16,140 @@ class MenuSesion(Menu):
 
     def crear_vehiculo(self, dueno):
         nom_vehiculo = input('Por favor indique el nombre de su vehiculo inicial:  ')
-        nombre = nom_vehiculo.replace(' ', '')
-        if not nombre.isalnum():
-            print('Nombre del vehiculo no valido.')
-            return self.crear_vehiculo()
-        
+        existe = self.verificar_vehiculo(nom_vehiculo)
+        if existe == 1:
+            print('Nombre del vehiculo ya existe o no es valido.')
+            vehiculo = self.crear_vehiculo(dueno)
+            return vehiculo
+
         else:
-            existe = 0
-            with open(PATHS['VEHICULOS'], 'r', encoding='utf-8') as archivo:
-                # Se genera un molde para buscar en que posicion 
-                # se encuentra le nombre de los pilotos
-                molde = archivo.readline()
-                molde = molde.strip().split(',')
-                for m in molde:
-                    if m == 'Nombre':
-                        nom = molde.index(m)
-                for l in archivo:
-                    vehiculo = l.strip().split(',')
-                    if vehiculo[nom] == nom_vehiculo:
-                        existe = 1
-
-            if existe == 1:
-                print('Nombre del vehiculo ya existe.')
-                vehiculo = self.crear_vehiculo()
-                return vehiculo
-
-            else:
-                tipo = input('Por favor indique el tipo de vehiculo \
+            tipo = input('Por favor indique el tipo de vehiculo \
 que desea (no ingrese acentos):  ')
-                tipo_mayus = tipo.upper()
-                if not tipo_mayus in ['TRONCOMOVIL', 'BICICLETA', 
-                    'MOTOCICLETA','AUTOMOVIL']:
-                    print('Tipo de vehiculo invalido')
-                    vehiculo = self.crear_vehiculo()
-                    return vehiculo 
+            tipo_mayus = tipo.upper()
+            if not tipo_mayus in ['TRONCOMOVIL', 'BICICLETA', 
+                'MOTOCICLETA','AUTOMOVIL']:
+                print('Tipo de vehiculo invalido')
+                vehiculo = self.crear_vehiculo(dueno)
+                return vehiculo 
+            else:
+                if tipo_mayus == 'TRONCOMOVIL':
+
+                    chasis = randint(TRONCOMOVIL['CHASIS']['MIN'], 
+                        TRONCOMOVIL['CHASIS']['MAX'])
+
+                    carroceria = randint(TRONCOMOVIL['CARROCERIA']['MIN'],
+                        TRONCOMOVIL['CARROCERIA']['MAX'])
+
+                    ruedas = randint(TRONCOMOVIL['RUEDAS']['MIN'],
+                        TRONCOMOVIL['RUEDAS']['MAX'])
+
+                    zapatillas = randint(TRONCOMOVIL['ZAPATILLAS']['MIN'],
+                        TRONCOMOVIL['ZAPATILLAS']['MAX'])
+
+                    peso = randint(TRONCOMOVIL['PESO']['MIN'],
+                        TRONCOMOVIL['PESO']['MAX'])
+
+                    vehiculo = Troncomovil(nom_vehiculo, dueno, 
+                        chasis, carroceria, ruedas, zapatillas, peso)
+                    return vehiculo
+
+                elif tipo_mayus == 'MOTOCICLETA':
+
+                    chasis = randint(MOTOCICLETA['CARROCERIA']['MIN'],
+                        MOTOCICLETA['CARROCERIA']['MAX'])
+
+                    carroceria = randint(MOTOCICLETA['CARROCERIA']['MIN'],
+                        MOTOCICLETA['CARROCERIA']['MAX'])
+
+                    ruedas = randint(MOTOCICLETA['RUEDAS']['MIN'],
+                        MOTOCICLETA['RUEDAS']['MAX'])
+
+                    motor = randint(MOTOCICLETA['MOTOR']['MIN'],
+                        MOTOCICLETA['MOTOR']['MAX'])
+
+                    peso = randint(MOTOCICLETA['PESO']['MIN'],
+                        MOTOCICLETA['PESO']['MAX'])
+
+                    vehiculo = Motocicleta(nom_vehiculo, dueno, 
+                        chasis, carroceria, ruedas, motor, peso)
+                    return vehiculo
+
+                elif tipo_mayus == 'BICICLETA':
+                    
+                    chasis = randint(BICICLETA['CHASIS']['MIN'], 
+                        BICICLETA['CHASIS']['MAX'])
+
+                    carroceria = randint(BICICLETA['CARROCERIA']['MIN'],
+                        BICICLETA['CARROCERIA']['MAX'])
+
+                    ruedas = randint(BICICLETA['RUEDAS']['MIN'],
+                        BICICLETA['RUEDAS']['MAX'])
+
+                    zapatillas = randint(BICICLETA['ZAPATILLAS']['MIN'],
+                        BICICLETA['ZAPATILLAS']['MAX'])
+
+                    peso = randint(BICICLETA['PESO']['MIN'],
+                        BICICLETA['PESO']['MAX'])
+
+                    vehiculo = Bicicleta(nom_vehiculo, dueno, 
+                        chasis, carroceria, ruedas, zapatillas, peso)
+                    return vehiculo
                 else:
-                    if tipo_mayus == 'TRONCOMOVIL':
 
-                        chasis = randint(TRONCOMOVIL['CHASIS']['MIN'], 
-                            TRONCOMOVIL['CHASIS']['MAX'])
+                    chasis = randint(AUTOMOVIL['CARROCERIA']['MIN'],
+                        AUTOMOVIL['CARROCERIA']['MAX'])
 
-                        carroceria = randint(TRONCOMOVIL['CARROCERIA']['MIN'],
-                            TRONCOMOVIL['CARROCERIA']['MAX'])
+                    carroceria = randint(AUTOMOVIL['CARROCERIA']['MIN'],
+                        AUTOMOVIL['CARROCERIA']['MAX'])
 
-                        ruedas = randint(TRONCOMOVIL['RUEDAS']['MIN'],
-                            TRONCOMOVIL['RUEDAS']['MAX'])
+                    ruedas = randint(AUTOMOVIL['RUEDAS']['MIN'],
+                        AUTOMOVIL['RUEDAS']['MAX'])
 
-                        zapatillas = randint(TRONCOMOVIL['ZAPATILLAS']['MIN'],
-                            TRONCOMOVIL['ZAPATILLAS']['MAX'])
+                    motor = randint(AUTOMOVIL['MOTOR']['MIN'],
+                        AUTOMOVIL['MOTOR']['MAX'])
 
-                        peso = randint(TRONCOMOVIL['PESO']['MIN'],
-                            TRONCOMOVIL['PESO']['MAX'])
+                    peso = randint(AUTOMOVIL['PESO']['MIN'],
+                        AUTOMOVIL['PESO']['MAX'])
 
-                        vehiculo = Troncomovil(nom_vehiculo, dueno, 
-                            chasis, carroceria, ruedas, zapatillas, peso)
-                        return vehiculo
-
-                    elif tipo_mayus == 'MOTOCICLETA':
-
-                        chasis = randint(MOTOCICLETA['CARROCERIA']['MIN'],
-                            MOTOCICLETA['CARROCERIA']['MAX'])
-
-                        carroceria = randint(MOTOCICLETA['CARROCERIA']['MIN'],
-                            MOTOCICLETA['CARROCERIA']['MAX'])
-
-                        ruedas = randint(MOTOCICLETA['RUEDAS']['MIN'],
-                            MOTOCICLETA['RUEDAS']['MAX'])
-
-                        motor = randint(MOTOCICLETA['MOTOR']['MIN'],
-                            MOTOCICLETA['MOTOR']['MAX'])
-
-                        peso = randint(MOTOCICLETA['PESO']['MIN'],
-                            MOTOCICLETA['PESO']['MAX'])
-
-                        vehiculo = Motocicleta(nom_vehiculo, dueno, 
-                            chasis, carroceria, ruedas, motor, peso)
-                        return vehiculo
-
-                    elif tipo_mayus == 'BICICLETA':
-                        
-                        chasis = randint(BICICLETA['CHASIS']['MIN'], 
-                            BICICLETA['CHASIS']['MAX'])
-
-                        carroceria = randint(BICICLETA['CARROCERIA']['MIN'],
-                            BICICLETA['CARROCERIA']['MAX'])
-
-                        ruedas = randint(BICICLETA['RUEDAS']['MIN'],
-                            BICICLETA['RUEDAS']['MAX'])
-
-                        zapatillas = randint(BICICLETA['ZAPATILLAS']['MIN'],
-                            BICICLETA['ZAPATILLAS']['MAX'])
-
-                        peso = randint(BICICLETA['PESO']['MIN'],
-                            BICICLETA['PESO']['MAX'])
-
-                        vehiculo = Bicicleta(nom_vehiculo, dueno, 
-                            chasis, carroceria, ruedas, zapatillas, peso)
-                        return vehiculo
-                    else:
-
-                        chasis = randint(AUTOMOVIL['CARROCERIA']['MIN'],
-                            AUTOMOVIL['CARROCERIA']['MAX'])
-
-                        carroceria = randint(AUTOMOVIL['CARROCERIA']['MIN'],
-                            AUTOMOVIL['CARROCERIA']['MAX'])
-
-                        ruedas = randint(AUTOMOVIL['RUEDAS']['MIN'],
-                            AUTOMOVIL['RUEDAS']['MAX'])
-
-                        motor = randint(AUTOMOVIL['MOTOR']['MIN'],
-                            AUTOMOVIL['MOTOR']['MAX'])
-
-                        peso = randint(AUTOMOVIL['PESO']['MIN'],
-                            AUTOMOVIL['PESO']['MAX'])
-
-                        vehiculo = Automovil(nom_vehiculo, dueno, 
-                            chasis, carroceria, ruedas, motor, peso)
-                        return vehiculo
+                    vehiculo = Automovil(nom_vehiculo, dueno, 
+                        chasis, carroceria, ruedas, motor, peso)
+                    return vehiculo
 
 
     def crear_piloto(self):
         nom_usuario = input('Por favor indique su nombre de piloto:    ')
-        nombre = nom_usuario.replace(' ', '')
-        if not nombre.isalnum():
-            print('Nombre de piloto no valido.')
+        existe = self.verificar_piloto(nom_usuario)
+        if existe == 1:
+            print('Nombre de piloto ya existe o no es valido.')
             self.crear_partida()
-
         else:
-            existe = 0
-            with open(PATHS['PILOTOS'], 'r', encoding='utf-8') as archivo:
-                # Se genera un molde para buscar en que posicion 
-                # se encuentra le nombre de los pilotos
-                molde = archivo.readline()
-                molde = molde.strip().split(',')
-                for m in molde:
-                    if m == 'Nombre':
-                        nom = molde.index(m)
-                for l in archivo:
-                    piloto = l.strip().split(',')
-                    if piloto[nom] == nom_usuario:
-                        existe = 1
+            equipo = input('Por favor indique el equipo al cual prefiere \
+pertenecer (Tareos, Hibridos o Docencios ):  ')
+            exp = 0
+            equi = equipo.upper()
 
-            if existe == 1:
-                print('Nombre de piloto ya existe.')
+            if not equi in ['TAREOS', 'HIBRIDOS', 'DOCENCIOS']:
+                print('Nombre de equipo invalido, vuelva a empezar.')
                 self.crear_partida()
+
             else:
-                equipo = input('Por favor indique el equipo al cual prefiere pertenecer \
-(Tareos, Hibridos o Docencios ):  ')
-                exp = 0
-                equi = equipo.upper()
-
-                if not equi in ['TAREOS', 'HIBRIDOS', 'DOCENCIOS']:
-                    print('Nombre de equipo invalido, vuelva a empezar.')
-                    self.crear_partida()
-
+                contextura = randint(EQUIPOS[equi]['CONTEXTURA']['MIN'], 
+                    EQUIPOS[equi]['CONTEXTURA']['MAX'])
+                equilibrio = randint(EQUIPOS[equi]['EQUILIBRIO']['MIN'], 
+                    EQUIPOS[equi]['EQUILIBRIO']['MAX'])
+                if equi == 'HIBRIDOS':
+                    personalidad = sample(EQUIPOS[equi]['PERSONALIDAD'],
+                            1)[0]
+                
                 else:
-                    contextura = randint(EQUIPOS[equi]['CONTEXTURA']['MIN'], 
-                        EQUIPOS[equi]['CONTEXTURA']['MAX'])
-                    equilibrio = randint(EQUIPOS[equi]['EQUILIBRIO']['MIN'], 
-                        EQUIPOS[equi]['EQUILIBRIO']['MAX'])
-                    if equi == 'HIBRIDOS':
-                        personalidad = sample(EQUIPOS[equi]['PERSONALIDAD'], 1)[0]
-                    
-                    else:
-                        personalidad = EQUIPOS[equi]['PERSONALIDAD']
-                    
-                    dinero = DINERO_INI
-                    piloto_nuevo = Piloto(nom_usuario, 
-                            dinero, personalidad, contextura, 
-                            equilibrio, exp, equipo)
+                    personalidad = EQUIPOS[equi]['PERSONALIDAD']
+                
+                dinero = DINERO_INI
+                piloto_nuevo = Piloto(nom_usuario, 
+                        dinero, personalidad, contextura, 
+                        equilibrio, exp, equipo)
 
-                    return piloto_nuevo
+                return piloto_nuevo
 
 
     def crear_partida(self):
@@ -255,7 +219,10 @@ que desea (no ingrese acentos):  ')
  
     def cargar_partida(self):
         piloto = self.cargar_piloto()
-        self.ir_menu(piloto)
+        if isinstance(piloto, Piloto):
+            self.ir_menu(piloto)
+        else:
+            self.menu()
 
 
 
@@ -269,22 +236,22 @@ que desea (no ingrese acentos):  ')
                 orden[m] = molde.index(m)
             for l in archivo:
                 piloto = l.strip().split(',')
-                print(piloto)
                 if nombre == piloto[orden['Nombre']]:
                     piloto_cargado = Piloto(
                         piloto[orden['Nombre']], 
-                        piloto[orden['Dinero']],
+                        int(piloto[orden['Dinero']]),
                         piloto[orden['Personalidad']], 
-                        piloto[orden['Contextura']], 
-                        piloto[orden['Equilibro']], 
-                        piloto[orden['Experiencia']], 
+                        int(piloto[orden['Contextura']]), 
+                        int(piloto[orden['Equilibrio']]), 
+                        int(piloto[orden['Experiencia']]), 
                         piloto[orden['Equipo']]
                         )
                     
                     return piloto_cargado
             
-            print('No existe un piloto con ese nombre, por favor cree \
-                una nueva partida.')
+        print('No existe un piloto con ese nombre, por favor cree \
+una nueva partida.')
+        
             
 
     def salir(self):

@@ -3,8 +3,11 @@ from abstracts import Persona
 
 
 class Piloto(Persona):
-    def __init__(self, nombre, dinero, personalidad, contextura, equilibrio, experiencia, equipo):
-        super().__init__(nombre, personalidad, contextura, equilibrio, experiencia, equipo)
+    def __init__(self, nombre, dinero, 
+        personalidad, contextura, equilibrio, 
+        experiencia, equipo):
+        super().__init__(nombre, personalidad, 
+            contextura, equilibrio, experiencia, equipo)
         self._dinero = dinero
 
 
@@ -13,45 +16,29 @@ class Piloto(Persona):
         return self._dinero
 
     @dinero.setter
-    def set_dinero(self, dinero):
-        self.dinero = dinero
-
-    @property
-    def experiencia(self):
-        return self._experiencia
-
-    @experiencia.setter
-    def set_experiencia(self, exp):
-        self.experiencia = exp
-
-    @property
-    def contextura(self):
-        return self._contextura
-    
-    @contextura.setter
-    def set_contextura(self, cont):
-        self.contextura = cont
+    def dinero(self, dinero):
+        self._dinero = dinero
     
 
     def __str__(self):
-        return \
-        'Piloto {0}\n \
-- Dinero: {1}\n \
-- Personalidad: {2}\n \
-- Contextura: {3}\n \
-- Equilibro: {4}\n \
-- Experiencia: {5}\n \
-- Equipo: {6}\n \
-            '.format(self._nombre, self.dinero, 
-            self._personalidad, self.contextura, 
-            self._equilibrio, self.experiencia, 
-            self._equipo)
+        impresion = 'Piloto {0}\n'.format(self._nombre)
+        impresion += '- Dinero: {0}\n'.format(self.dinero)
+        impresion += '- Personalidad: {0}\n'.format(self._personalidad) 
+        impresion += '- Contextura: {0}\n'.format(self.contextura)
+        impresion += '- Equilibro: {0}\n'.format(self._equilibrio)
+        impresion += '- Experiencia: {0}\n'.format(self.experiencia)
+        impresion += '- Equipo: {0}\n'.format(self._equipo)
+        return impresion
+            
 
 
 
 
 class Contrincante(Persona):
-    def __init__(self, nombre, nivel, personalidad, contextura, equilibrio, experiencia, equipo):
-        super().__init__(nombre, personalidad, contextura, equilibrio, experiencia, equipo)
+    def __init__(self, nombre, nivel, 
+            personalidad, contextura, 
+            equilibrio, experiencia, equipo):
+        super().__init__(nombre, personalidad, 
+            contextura, equilibrio, experiencia, equipo)
         self._nivel = nivel
         

@@ -1,13 +1,4 @@
-# Tarea X: Nombre de la tarea :school_satchel:
-
-
-Un buen ```README.md``` puede marcar una gran diferencia en la facilidad con la que corregimos una tarea, y consecuentemente cómo funciona su programa, por lo en general, entre más ordenado y limpio sea éste, mejor será 
-
-Para nuestra suerte, GitHub soporta el formato [MarkDown](https://es.wikipedia.org/wiki/Markdown), el cual permite utilizar una amplia variedad de estilos de texto, tanto para resaltar cosas importantes como para separar ideas o poner código de manera ordenada ([pueden ver casi todas las funcionalidades que incluye aquí](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet))
-
-Un buen ```README.md``` no tiene por que ser muy extenso tampoco, hay que ser **concisos** (a menos que lo consideren necesario) pero **tampoco pueden** faltar cosas. Lo importante es que sea claro y limpio 
-
-**Dejar claro lo que NO pudieron implementar y lo que no funciona a la perfección. Esto puede sonar innecesario pero permite que el ayudante se enfoque en lo que sí podría subir su puntaje.**
+# Tarea 1: INICIAL P    
 
 ## Consideraciones generales :octocat:
 
@@ -15,7 +6,7 @@ Un buen ```README.md``` no tiene por que ser muy extenso tampoco, hay que ser **
 
 * Como en ningun lado aparecia algo sobre le dinero inicial de un piloto, decidi darles un dinero inicial de $500
 
-* 
+* Cuando uno crea una nueva partida en el Menu Sesion y va al Menu Principal y luego vuelve al Menu Sesion para crear otra nueva partia, al terminar el juego o sesion (esto es, volviendo al Menu Sesion y saliendo de la partida), aparece un error en la consola y nunca supe como solucionarlo pero no afecta en nada el flujo del juego.
 
 <Descripción de lo que hace y que **_no_** hace la tarea que entregaron junto
 con detalles de último minuto y consideraciones como por ejemplo cambiar algo

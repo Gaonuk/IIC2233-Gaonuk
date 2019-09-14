@@ -180,23 +180,23 @@ EQUIPOS = {
 # Las constantes de las formulas
 
 # Velocidad real
-VELOCIDAD_MINIMA = None
+VELOCIDAD_MINIMA = 30
 
 # Velocidad intencional
-EFECTO_OSADO = None
-EFECTO_PRECAVIDO = None
+EFECTO_OSADO = 7
+EFECTO_PRECAVIDO = 2
 
 # Dificultad de control del vehículo
-PESO_MEDIO = None
-EQUILIBRIO_PRECAVIDO = None
+PESO_MEDIO = 30
+EQUILIBRIO_PRECAVIDO = 10
 
 # Tiempo pits
-TIEMPO_MINIMO_PITS = None
-VELOCIDAD_PITS = None
+TIEMPO_MINIMO_PITS = 20
+VELOCIDAD_PITS = 15
 
 # Experiencia por ganar
-BONIFICACION_PRECAVIDO = None
-BONIFICACION_OSADO = None
+BONIFICACION_PRECAVIDO = 5
+BONIFICACION_OSADO = 7
 
 
 # Paths de los archivos
@@ -223,3 +223,9 @@ SPD_RELAMPAGO = None
 
 #Dinero Inicial de los Pilotos creados
 DINERO_INI = 500
+
+
+#Ponderaciones
+POND_EFECT_HIELO = 2
+POND_EFECT_ROCAS = 3
+POND_EFECT_DIFICULTAD = 4
