@@ -6,64 +6,79 @@
 
 * Como en ningun lado aparecia algo sobre le dinero inicial de un piloto, decidi darles un dinero inicial de $500
 
-* Cuando uno crea una nueva partida en el Menu Sesion y va al Menu Principal y luego vuelve al Menu Sesion para crear otra nueva partia, al terminar el juego o sesion (esto es, volviendo al Menu Sesion y saliendo de la partida), aparece un error en la consola y nunca supe como solucionarlo pero no afecta en nada el flujo del juego.
+* En mi juego, no alcance a implementar nada del flujo de la carrera, osea lo unico que uno puede hacer es crear un nuevo piloto junto con su vehiculo o cargar una partida, luego en el Menu Principal se puede ir hacia el menu de preparacion, escoger un vehiculo y una pista y entrar en el menu de carrera que lo unico que hace es acceder directamente al menu de los pits el cual solo imprime las opciones en la pantalla pero no fueron implementadas ninguna de las opciones. Por otro lado esta implementado el poder comprar nuevos vehiculos, y guardar partida.
 
-<Descripción de lo que hace y que **_no_** hace la tarea que entregaron junto
-con detalles de último minuto y consideraciones como por ejemplo cambiar algo
-en cierta línea del código o comentar una función>
+* Implemente el bonus de buenas practicas en su totalidad, en los modulos menus1 a menus3 y en el modulo funciones
+
+* Para guardar y cargar las partidas se generaba un diccionario basado en la primera linea de los archivos .csv dado que en estos se encontraba el orden de los atributos de las entidades y asi era posible mantener el orden sin importar cual fuese.
+
+* De nervioso por hacer el ultimo push se paso que cuando uno entra al menu Carrera luego de haber seleccionado la pista y el vehiculo a utilizar en la carrera, el codigo entra en un while True del cual nunca va a salir, lo unico que hace es enviar a uno al menu de los pits
+
+* Todas las clases abstractas se encuentran en el modulo abstracts y todos los otros modulos importan este para poder generar las clases de las entidades utilizadas en el programa y que heredan de sus clases madres que son abstractas
+
+* En el modulo pista se encuentra la multiherencia con la clase PistaSuprema que hereda de PistaHielo y PistaRocosa
+
+* Utilize relaciones de agregacion entre las entidades Piloto y Vehiculo, en que un Piloto tiene como atributo una lista llamada vehiculos que contiene todos los vehiculos que le pertenecen. Tambien entre las entidades Contrincantes y Pista, ya que cada pista tiene una lista de todos los Contrincantes que participan en esa pista.
+
+* El codigo para cargar las partidas se encuentra en el modulo ```menus1.py``` en las lineas 220-309
+
+* El modulo parametros es importado los modulos abstracts, funciones, menus1, menus2 y menus3
 
 ### Cosas implementadas y no implementadas :white_check_mark: :x:
 
-* <Nombre item pauta<sub>1</sub>>: Hecha completa
-* <Nombre item pauta<sub>2</sub>>: Me faltó hacer <insertar qué cosa faltó>
-    * <Nombre subitem pauta<sub>2.1</sub>>: Hecha completa 
-    * <Nombre subitem pauta<sub>2.2</sub>>: Me faltó hacer <insertar qué cosa faltó>
-    * ...
-* <Nombre item pauta<sub>3</sub>>: Me faltó hacer <insertar qué cosa faltó>
-* ...
-* <Nombre item pauta<sub>n</sub>>: Me faltó hacer <insertar qué cosa faltó>
+* Parte Menus: Me falto implementar funcionalidades en los menus: Menu Pits y Menu Carrera
+    * Parte Menu Carrera : Me falto hacer todo, lo unico que hace este menu es enviarte al menu Pits en un loop infinito 
+    * Parte Menu Pits: En esta parte se imprime el menu pero solo funciona la opcion de salir de ese menu 
+    * Parte Menu Principal: Hecha Completa
+    * Parte Menu Sesion: Hecha Completa
+    * Parte Menu Compras: Hechas Completa
+    * Parte Menu Preparacion: Hecha Completa
+
+* Parte Flujo de la Carrera: No Realizada
+
+* Parte Entidades: Hecha Completa
+
+* Parte Archivos: Hecha Completa
+
+* Parte Formulas: Hecha Completa
+
+* Bonus: Me falto hacer power-ups
+    * Parte Buenas Practicas: Hecha Completa
+    * Parte Power-Ups: No Realizada
+
+* Parte Diagrama: Me falto agregar unos menus al diagrama de clases y unas cuantas relaciones
 
 ## Ejecución :computer:
-El módulo principal de la tarea a ejecutar es  ```archivo.py```. Además se debe crear los siguientes archivos y directorios adicionales:
-1. ```archivo.ext``` en ```ubicación```
-2. ```directorio``` en ```ubicación```
-3. ...
+El módulo principal de la tarea a ejecutar es  ```main.py```. Además puse todos los archivos ```.csv``` en una carpeta llamada 'base_datos' por ende para el buen funcionamiento del programa todos los archivos .csv deben ser guardados en una carpeta con ese nombre
+
 
 
 ## Librerías :books:
 ### Librerías externas utilizadas
 La lista de librerías externas que utilicé fue la siguiente:
 
-1. ```librería_1```: ```función() / módulo```
-2. ```librería_2```: ```función() / módulo``` (debe instalarse)
-3. ...
+1. ```random```: ```randint() / menus1 y menus2```, ```sample() / menus1```
+2. ```math```: ```floor() y ceil() / funciones``` 
+3. ```collections```: ```defaultdict() / menus1, menus2 y menus3```
+4. ```abc```: ```ABC y abstractmethod / abstracts```
+5. ```os```: ```path.join() / parametros```
 
 ### Librerías propias
 Por otro lado, los módulos que fueron creados fueron los siguientes:
 
-1. ```librería_1```: Contiene a ```ClaseA```, ```ClaseB```, (ser general, tampoco es necesario especificar cada una)...
-2. ```librería_2```: Hecha para <insertar descripción **breve** de lo que hace o qué contiene>
-3. ...
-
-## Supuestos y consideraciones adicionales :thinking:
-Los supuestos que realicé durante la tarea son los siguientes:
-
-1. <Descripción/consideración 1 y justificación del por qué es válido/a> 
-2. <Descripción/consideración 2 y justificación del por qué es válido/a>
-3. ...
-
-PD: <una última consideración (de ser necesaria) o comentario hecho anteriormente que se quiera **recalcar**>
-
-
--------
+1. ```abstract```: Contiene a las clases abstractas ```Menu```, ```Vehiculo```, ```Persona``` y ```Pista```
+2. ```menus1```: Contiene la clase ```MenuSesion```
+3. ```menus2```: Contiene la clase ```MenuPrincipal``` y ```MenuCompras```
+4. ```vehiculos```: Contiene las clases de todos los tipos de vehiculos del juego
+4. ```pilotos```: Contiene las clases de ```Piloto``` y ```Contrincante```
+5. ```pista```: Contiene las clases de los distintos tipos de Pistas 
+6. ```funciones```: Contiene todas las funciones necesarias para la ejecucion de la carrera
+7. ```parametros```: Contiene todos los parametros usados dentro del programa
+8. ```menus3```: Contiene ```MenuPreparacion```, ```MenuCarrera``` y ```MenuPits```
 
 
 ## Referencias de código externo :book:
 
 Para realizar mi tarea saqué código de:
-1. 
+1. https://stackoverflow.com/questions/4710067/using-python-for-deleting-a-specific-line-in-a-file, este codigo sirve para poder eliminar una linea especifica en un archivo txt, esta implementado en ```menus2.py``` en los metodos ```guardar_piloto()``` y ```guardar_vehiculo()``` 
 
-
-
-## Descuentos
-La guía de descuentos se encuentra [link](https://github.com/IIC2233/syllabus/blob/master/Tareas/Descuentos.md).
