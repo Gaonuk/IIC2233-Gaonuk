@@ -15,7 +15,7 @@ class Ayudante:
         self.rango = rango
         self.tipo = tipo
         self.afinidad = afinidad
-        self.eficiencia = eficiencia
+        self.eficiencia = int(eficiencia)
         self.hijos = []
 
     def agregar_ayudante(self, ayudante):
@@ -52,7 +52,7 @@ def grupo_mayor_eficiencia(coordinador):
                 elif vertice.rango == 'Mentor':
                     aumento = 2 * aumento
                     e_tareos += aumento
-                else:
+                elif vertice.rango == 'Novato':
                     e_tareos += aumento
             else:
                 if vertice.rango == 'Jefe':
@@ -61,7 +61,7 @@ def grupo_mayor_eficiencia(coordinador):
                 elif vertice.rango == 'Mentor':
                     aumento = 2 * aumento
                     e_docencios += aumento
-                else:
+                elif vertice.rango == 'Novato':
                     e_docencios += aumento
             visitados.append(vertice)
             for vecino in vertice.hijos:
@@ -70,8 +70,12 @@ def grupo_mayor_eficiencia(coordinador):
     
     if e_docencios > e_tareos:
         imprimir_grupo(docencio)
+        print('Grupo mas eficiente: Docencios')
+        print(f'Eficiencia total grupal: {e_docencios}')
     else:
         imprimir_grupo(tareo)
+        print('Grupo mas eficiente: Tareos')
+        print(f'Eficiencia total grupal: {e_tareos}')
 
 
 
