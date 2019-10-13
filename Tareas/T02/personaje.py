@@ -121,16 +121,54 @@ class Personaje(QObject):
         pos_x, pos_y = self.x, self.y
         if direction == 'U':
             pos_y += 10
+            bottom_pos_x = pos_x // SIZE_TILE
+            top_pos_y = (pos_y // SIZE_TILE) + 1
+            if self.columns[top_pos_y][bottom_pos_x]:
+                rect, tipo = self.columns[top_pos_y][bottom_pos_x]
+                if tipo == 'roca':
+                    return True
+                else:
+                    return False
+            else:
+                return False
         elif direction == 'D':
             pos_y -= 10
+            bottom_pos_x = pos_x //(SIZE_TILE)
+            bottom_pos_y = (pos_y //SIZE_TILE) - 1
+            if self.columns[bottom_pos_y][bottom_pos_x]:
+                rect, tipo = self.columns[bottom_pos_y][bottom_pos_x]
+                if tipo == 'roca':
+                    return True
+                else:
+                    return False
+            else:
+                return False
         elif direction == 'L':
             pos_x -= 10
+            bottom_pos_x = (pos_x//SIZE_TILE) - 1
+            bottom_pos_y = pos_y//SIZE_TILE
+            if self.columns[bottom_pos_y][bottom_pos_x]:
+                rect, tipo = self.columns[bottom_pos_y][bottom_pos_x]
+                if tipo == 'roca':
+                    return True
+                else:
+                    return False
+            else:
+                return False
         else:
             pos_x += 10
-        bottom_pos_x = pos_x //(2*SIZE_TILE)
-        top_pos_x = (pos_x//(2*SIZE_TILE)) + 1
-        bottom_pos_y = pos_y //(2*SIZE_TILE)
-        top_pos_y = (pos_y //(2*SIZE_TILE)) + 1
+            top_pos_x = (pos_x//SIZE_TILE) + 1
+            bottom_pos_y = (pos_y//SIZE_TILE)
+            if self.columns[bottom_pos_y][top_pos_x]:
+                rect, tipo = self.columns[bottom_pos_y][top_pos_x]
+                if tipo == 'roca':
+                    return True
+                else:
+                    return False
+            else:
+                return False
+
+        
         
 
     def recibe_obstaculo(self, event):
