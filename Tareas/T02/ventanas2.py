@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton,
                              QApplication, QHBoxLayout, QVBoxLayout, 
                              QGridLayout, QSizePolicy)
 from PyQt5.QtCore import (pyqtSignal, Qt, QRect)
-from PyQt5.QtGui import (QPixmap, QFont, QMovie)
+from PyQt5.QtGui import (QPixmap, QFont)
 from PyQt5.Qt import QTest
 from PyQt5 import uic
 from time import sleep

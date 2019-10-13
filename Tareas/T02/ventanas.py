@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton,
                              QApplication, QHBoxLayout, QVBoxLayout, 
                              QGridLayout, QSizePolicy)
 from PyQt5.QtCore import (pyqtSignal, Qt, QRect, QTimer)
-from PyQt5.QtGui import (QPixmap, QFont, QMovie)
+from PyQt5.QtGui import (QPixmap, QFont)
 from PyQt5 import uic
 from parametros_generales import (PATHS, SIZE_TILE, PERSONAJE, 
                                   KEY_EVENT_DICT, DINERO_INICIAL,
