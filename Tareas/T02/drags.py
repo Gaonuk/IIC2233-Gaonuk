@@ -3,17 +3,18 @@ import sys
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget
 from PyQt5.QtGui import QDrag, QPixmap, QPainter, QCursor
 from PyQt5.QtCore import QMimeData, Qt, pyqtSignal
-from parametros_generales import PATHS
-from plantas import Planta
+from parametros_generales import PATHS, CHOCLO, SIZE_TILE, ALCACHOFA
+from threads import Planta
+from PyQt5.Qt import QTest
 
 
 class DraggableLabel(QLabel):
+    senal_inventario = pyqtSignal()
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setText(args[0])
         self._text = None
         self.setAcceptDrops(True)
-        print("my text in init ", self.text())
 
 
     def setPixmap(self, pixmap):
@@ -39,6 +40,7 @@ class DraggableLabel(QLabel):
             return
         drag = QDrag(self)
         mimedata = QMimeData()
+        mimedata.setParent(self)
         mimedata.setText(self.text())
         mimedata.setImageData(self.pixmap().toImage())
         drag.setMimeData(mimedata)
@@ -57,9 +59,32 @@ class DraggableLabel(QLabel):
 
 class DropLabel(QLabel):
     senal_actualizar = pyqtSignal(str)
+    senal_empezar = pyqtSignal()
+    clicked = pyqtSignal()
+     
     def __init__(self, *args, **kwargs):
         QLabel.__init__(self, *args, **kwargs)
         self.setAcceptDrops(True)
+        self.senal_empezar.connect(self.start)
+        self.setText(args[0])
+        self._text = None       
+        self.senal_inventario = None
+
+    def setPixmap(self, pixmap):
+        if pixmap.isNull():
+            self._text = None
+        else:
+            self._text = self.text()
+        super().setPixmap(pixmap)
+
+    def text(self):
+        if self._text:
+            return self._text
+        return super().text()
+
+    def mousePressEvent(self, event):
+        self.clicked.emit()
+        QLabel.mousePressEvent(self, event)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasImage():
@@ -73,13 +98,44 @@ class DropLabel(QLabel):
         if event.mimeData().text() in ['semilla_a', 'semilla_c']:
             pos = event.pos()
             text = event.mimeData().text()
-            # self.setPixmap(QPixmap(event.mimeData().imageData()))
-            print('mimetext', text)
-            planta = Planta(text)
-            
+            #self.setPixmap(QPixmap(event.mimeData().imageData()))
             event.acceptProposedAction()
+           
+        
+            self.planta = Planta(text)
+            self.planta.senal_actualizar.connect(self.actualizar_sprite)
+            # self.hide()
+            self.setAcceptDrops(False)
+            self.senal_empezar.emit()
+            self.senal_inventario.emit({'object': event.mimeData().parent()})
+            
         else:
             print('invalid operation')
+
+    def start(self):
+        self.planta.start()
+
+    def actualizar_sprite(self, frame, tipo):
+        
+        if tipo == 'semilla_c':
+            if frame == 6:
+                self.setText('choclo')
+            pix = QPixmap(CHOCLO[frame])
+            pix = pix.scaled(SIZE_TILE, SIZE_TILE)
+            self.setPixmap(pix)
+            self.setScaledContents(True)
+            if frame == 7:
+                QTest.qWait(3700)
+                self.actualizar_sprite(6, tipo)
+        else:
+            if frame == 6:
+                self.setText('alcachofa')
+            pix = QPixmap(ALCACHOFA[frame])
+            pix = pix.scaled(SIZE_TILE, SIZE_TILE)
+            self.setPixmap(pix)
+            self.setScaledContents(True)
+            
+        
 
 class Widget(QWidget):
     def __init__(self):

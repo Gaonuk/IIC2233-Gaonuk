@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QApplication
-from Ventanas import VentanaJuego, VentanaPalabra
+from Ventanas import VentanaJuego, VentanaPalabra, VentanaGif
 from DCColgado import DCColgado
 import sys
 
@@ -18,6 +18,7 @@ ventana2 = VentanaPalabra()
 ventana = VentanaJuego(ventana2)
 ventana.show()
 
+ventanagif = VentanaGif()
 # Se crea el Back-end
 DCC_51 = DCColgado()
 
@@ -30,6 +31,7 @@ ventana2.enviar_palabra_signal.connect(DCC_51.check_info)
 
 # ===== Debes conectar esta señal con el metodo respectivo del front-end ======
 DCC_51.respuesta_signal.connect(ventana.actualizar_interfaz)
+DCC_51.end_signal.connect(ventanagif.abrir_gif)
 
 
 # Se inicia una partida.

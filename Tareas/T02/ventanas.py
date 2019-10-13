@@ -1,23 +1,25 @@
 from PyQt5.QtWidgets import (QWidget, QLabel, QLineEdit, QPushButton,
                              QApplication, QHBoxLayout, QVBoxLayout, 
                              QGridLayout, QSizePolicy)
-from PyQt5.QtCore import (pyqtSignal, Qt, QRect)
+from PyQt5.QtCore import (pyqtSignal, Qt, QRect, QTimer)
 from PyQt5.QtGui import (QPixmap, QFont, QMovie)
 from PyQt5 import uic
 from parametros_generales import (PATHS, SIZE_TILE, PERSONAJE, 
                                   KEY_EVENT_DICT, DINERO_INICIAL,
-                                  FONT, DINERO_TRAMPA)
+                                  FONT, DINERO_TRAMPA, DURACION_ORO)
+from parametros_acciones import ENERGIA_HERRAMIENTA, ENERGIA_COSECHAR
 import sys
 from os.path import join
 from random import randint
 from personaje import Personaje
 from drags import DraggableLabel, DropLabel
-from plantas import Planta
+from threads import Planta, Actualizador
 from collections import deque
+from ventanas2 import Recurso, ClickLabel, VentanaTienda
+
 
 window_name, base_class = uic.loadUiType("inicio.ui")
 window_name2, base_class2 = uic.loadUiType("juego.ui")
-window_name3, base_class3 = uic.loadUiType("inventario.ui")
 
 
 class VentanaInicio(window_name, base_class):
@@ -52,6 +54,9 @@ class VentanaJuego(window_name2, base_class2):
     restaurar_energia = pyqtSignal()
     actualizar_dinero = pyqtSignal(int)
     senal_roca = pyqtSignal(tuple)
+    senal_enviar_energia = pyqtSignal(int)
+    senal_plantar = pyqtSignal(dict)
+
 
     def __init__(self):
         super().__init__()
@@ -62,6 +67,8 @@ class VentanaJuego(window_name2, base_class2):
         self.current_sprite = None
         self.senal_compra = None
         self.senal_venta = None
+        self.senal_energia = None
+        self.no_compra = None
         
 
     def init_gui(self, ruta):
@@ -129,10 +136,13 @@ class VentanaJuego(window_name2, base_class2):
                     pixeles = pixeles.scaled(SIZE_TILE, SIZE_TILE)
                     tile.setPixmap(pixeles)
                     tile.setScaledContents(True)
-                    
+                    tile.clicked.connect(self.item_clicked)
+                    tile.senal_inventario = self.senal_plantar
+
+               
                     self.grilla.addWidget(tile, y, x)
                 else:
-                    tile = QLabel('', self)
+                    tile = ClickLabel('tile', self)
                     n = randint(0, 100)
                     if n <= 10:
                         pixeles = QPixmap(PATHS['flores'])
@@ -141,12 +151,15 @@ class VentanaJuego(window_name2, base_class2):
                     pixeles = pixeles.scaled(SIZE_TILE, SIZE_TILE)
                     tile.setPixmap(pixeles)
                     tile.setScaledContents(True)
+                    tile.clicked.connect(self.item_clicked)
                     
                     self.grilla.addWidget(tile, y, x)
+
         self.grilla.setVerticalSpacing(0)
         self.grilla.setHorizontalSpacing(0)
         self.personaje = Personaje(100, 200, self.widget.geometry().width(), 
-            self.geometry().height()- 60)
+            self.geometry().height()- 60, mapa)
+        self.tienda = VentanaTienda()
         self.init_signals()
         t = True
         h = True
@@ -192,6 +205,8 @@ class VentanaJuego(window_name2, base_class2):
         
         self.move(150, 200)
         self.show()
+        
+
 
         
         self.senal_inventario.emit()
@@ -201,13 +216,20 @@ class VentanaJuego(window_name2, base_class2):
 
     def init_signals(self):
         self.update_window_signal.connect(self.update_window)
+        self.senal_compra = self.tienda.senal_compra
+        self.senal_venta = self.tienda.senal_venta
+        self.personaje.senal_botones.connect(self.tienda.actualizar_botones)
         self.senal_compra.connect(self.personaje.compra)
         self.senal_venta.connect(self.personaje.venta)
         self.personaje.senal_dinero = self.actualizar_dinero
         self.personaje.uptade_window_signal = self.update_window_signal
         self.update_personaje_signal = self.personaje.update_character_signal
         self.personaje.update_front.connect(self.update_mapa)
+        self.senal_energia = self.personaje.senal_energia
+        self.senal_energia.connect(self.enviar_energia)
         self.senal_roca.connect(self.personaje.obstaculos.add_roca)
+        self.personaje.invalid_transaccion.connect(self.tienda.no_hay_dinero)
+        self.personaje.senal_inventario = self.inventario_signal_update
         
 
     @property
@@ -220,39 +242,85 @@ class VentanaJuego(window_name2, base_class2):
 
     def keyPressEvent(self, e):
         self.teclas.add(e.key())
-        print(self.teclas)
         if e.key() in KEY_EVENT_DICT:
             action = KEY_EVENT_DICT[e.key()]
             self.update_personaje_signal.emit(action)
 
         if self.teclas == set([73, 80, 75]):
-            print('wea')
             self.restaurar_energia.emit()
 
         if self.teclas == set([89, 77, 78]):
             self.personaje.dinero += DINERO_TRAMPA
 
-        
+    def enviar_energia(self, energia):
+        self.senal_enviar_energia.emit(energia)
 
     def keyReleaseEvent(self, e):
         self.teclas.remove(e.key())
 
     def update_mapa(self, event):
         if event['status'] == 'oro':
-            item = QLabel('', self)
-            pix = QPixmap(PATHS['oro'])
-            pix = pix.scaled(SIZE_TILE, SIZE_TILE)
-            item.setPixmap(pix)
-            item.setScaledContents(True)
+            item = Recurso('oro', '', self)
             self.grilla.addWidget(item, *(event['coordenadas']))
         else:
-            item = QLabel('', self)
+            item = ClickLabel('arbol', self)
             pix = QPixmap(PATHS['arbol'])
             pix = pix.scaled(SIZE_TILE, SIZE_TILE)
             item.setPixmap(pix)
             item.setScaledContents(True)
+            item.clicked.connect(self.item_clicked)
             self.grilla.addWidget(item, *(event['coordenadas']))
         # self.inventario_signal_update.emit(event)
+
+
+    def item_clicked(self):
+        label = self.sender()
+        if label.text() == 'tile' and self.personaje.azada == True:
+            cultivo = DropLabel('', self)
+            pixeles = QPixmap(PATHS['cultivo'])
+            pixeles = pixeles.scaled(SIZE_TILE, SIZE_TILE)
+            cultivo.setPixmap(pixeles)
+            cultivo.setScaledContents(True)
+            self.grilla.replaceWidget(label, cultivo)
+            cultivo.senal_inventario = self.senal_plantar
+            label.hide()
+            label.deleteLater()
+            label.destroy()
+            self.personaje.energia -= ENERGIA_HERRAMIENTA
+            # grid = QGridLayout()
+            # grid.replaceWidget()
+            # label = cultivo
+            # label.show()
+        elif label.text() == 'arbol' and self.personaje.hacha:
+            item = Recurso('madera', '', self)
+            
+            self.grilla.replaceWidget(label, item)
+            label.hide()
+            label.deleteLater()
+            label.destroy()
+
+            self.personaje.energia -= ENERGIA_HERRAMIENTA
+
+        elif label.text() == 'choclo':
+            item = Recurso(label.text(), '', self)
+            
+            y = label.y()
+            x = label.x()
+            item.setGeometry(x, y, SIZE_TILE, SIZE_TILE)
+            item.show()
+            label.actualizar_sprite(7, 'semilla_c')
+            # self.grilla.addWidget()
+            self.personaje.energia -= ENERGIA_COSECHAR
+        elif label.text() == 'alcachofa':
+            item = Recurso(label.text(), '', self)
+            self.grilla.replaceWidget(label, item)
+            label.hide()
+            label.deleteLater()
+            label.destroy()
+            self.personaje.energia -= ENERGIA_COSECHAR
+        else:
+            print('no se puede cosechar')
+
 
     def update_window(self, e):
         direction = e['direction']
@@ -264,83 +332,8 @@ class VentanaJuego(window_name2, base_class2):
         self.front_personaje.setPixmap(self.current_sprite)
         self.front_personaje.move(e['x'], e['y'])
 
+    def eliminar_de_inventario(self):
+        pass
 
 
-class Inventario(window_name3, base_class3):
-    senal_perder = pyqtSignal()
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-        self.energia = 100
-        self.posx = 0
-        self.posy = 0
-        # self.init_gui()
-
-    def init_gui(self):
-        print('hola')
-        sprite = QPixmap(PATHS['fondo'])
-        sprite = sprite.scaled(800, 428)
-        self.label_2.setPixmap(sprite)
-        pixmap = QPixmap(PATHS['inventario'])
-        self.label.setPixmap(pixmap)
-        self.label_4.setText('Dinero: {0}'.format(DINERO_INICIAL))
-        self.label_4.setFont(FONT)
-        pos_x = [i for i in range(12)]
-        pos_y = [j for j in range(3)]
-        for y in pos_y:
-            for x in pos_x:
-                item = DraggableLabel('', self)
-                self.inventario.addWidget(item, y, x)
-        # self.posx += 1
-        self.salir.clicked.connect(self.exit)
-        self.move(950, 200)
-        self.show()
-    
-    
-
-    def exit(self):
-        self.hide()
-        sys.exit()
-        
-    def actualizar_labels(self, horas, minutos, dias):
-        
-        if horas < 10:
-            horas = '0{0}'.format(horas)
-        if minutos < 10:
-            minutos = '0{0}'.format(minutos)
-            
-        self.hora.setText(f"Hora: {horas}:{minutos}")
-        self.hora.setFont(FONT)
-        self.dia.setText(f"Dia: {dias}")
-        self.dia.setFont(FONT)
-    
-    def actualizar_energia(self):
-        self.energia -= 1
-        self.pbar.setValue(self.energia)
-        if self.energia == 0:
-            self.game_over()
-
-    def restaurar_energia(self):
-        self.energia = 100
-        self.pbar.setValue(self.energia)
-
-    def game_over(self):
-        self.senal_perder.emit()
-
-    def actualizar_dinero(self, dinero):
-        self.label_4.setText('Dinero: {0}'.format(dinero))
-        self.label_4.setFont(FONT)
-
-    def actualizar_inventario(self, event):
-        if event['status'] == 'oro':
-            grid = QGridLayout()
-            grid.replaceWidget()
-            self.inventario.itemAtPosition(self.posy, self.posx).setPixmap(QPixmap(PATHS['oro']))
-            if self.posx < 11:
-                self.posx += 1
-            elif self.posy < 3:
-                self.posy += 1
-                self.posx = 0
-            else:
-                print('maximos items en el inventario')
 

@@ -6,7 +6,7 @@ class Planta(QObject):
         super().__init__(*args, **kwargs)
         self.tipo = tipo
         self.timer = QTimer()
-        self.timer.start(10000)
+        self.timer.start(100)
         self.init_gui()
 
     def init_gui(self):

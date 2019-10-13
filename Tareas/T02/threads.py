@@ -68,7 +68,7 @@ class Planta(QThread):
         self.tipo = tipo
         self.maxframe = 0
         if self.tipo == 'semilla_c':
-            self.maxframe = FASES_CHOCLOS
+            self.maxframe = FASES_CHOCLOS - 1
             self.tiempo = TIEMPO_CHOCLOS/FASES_CHOCLOS
         else:
             self.maxframe = FASES_ALCACHOFAS
@@ -77,7 +77,7 @@ class Planta(QThread):
         
 
     def run(self):
-        while self.frame != self.maxframe:
+        while self.frame < self.maxframe + 1:
             self.senal_actualizar.emit(self.frame, self.tipo)
             self.frame += 1
             
@@ -152,7 +152,6 @@ class Obstaculos(QThread):
                     if tipo not in ['roca', 'arbol']:
                         self.update_signal.emit({'status': f'{tipo}', 'coordenates': (x, y), 'mode':'recoger'})
                         self.columns[y][x] = None
-                        print(tipo)
                     else:
                         pass
             

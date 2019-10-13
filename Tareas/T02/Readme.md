@@ -92,7 +92,9 @@ Lo importante es que expliquen qué hace la función y que si saben que alguna p
 Para realizar mi tarea saqué código de:
 1. https://stackoverflow.com/questions/55636860/drag-and-drop-qlabels-with-pyqt5-pixmap-and-text: drag and drop
 
+2. https://stackoverflow.com/questions/50955182/pyqt5-which-qlabel-was-pressed-by-mousepressevent: click label
 
+3. https://stackoverflow.com/questions/49013010/enabling-disabling-buttons: apagar botones
 
 
 ## Descuentos

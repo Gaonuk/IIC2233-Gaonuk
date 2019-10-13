@@ -125,7 +125,7 @@ class DCColgado(QObject):
         # Se genera una palabra random.
         # === Puedes agregar tu propia palabra para probar. ====
         palabra = OBTENER_PALABRA()
-
+        print(palabra)
         # Se vuelve todo a los valores iniciales
         self.usadas = ""
         self.disponibles = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
@@ -147,6 +147,7 @@ class DCColgado(QObject):
 
         if self.ganador:
             self.mensaje = "Felicitaciones, has gandado!"
+            self.end_signal.emit({"gif": self.imagenes["win"]})
         elif self.intentos == 0:
             self.mensaje = "Que lastima, has perdido :("
 

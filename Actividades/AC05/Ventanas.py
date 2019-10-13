@@ -149,19 +149,22 @@ class VentanaPalabra(QWidget):
         self.enviar_palabra_signal.emit(self.data)
         
 class VentanaGif(QWidget):
-    def __init__(self, ruta):
+    def __init__(self):
         super().__init__()
         self.init_gui()
+        
 
     def init_gui(self):
-        self.setGeometry(300,300, 450,200)
+        self.setGeometry(300,300, 450,500)
 
         self.gif = QLabel('', self)
         self.gif.resize(self.gif.sizeHint())
 
-        
-        pixeles = QPixmap(self.ruta)
+    def abrir_gif(self, data):
+        print('hi')
+        pixeles = QPixmap(data['gif'])
         self.gif.setPixmap(pixeles)
         self.gif.setScaledContents(True)
-        self.gif.resize(self.labelimg1.sizeHint())
+        self.gif.resize(self.gif.sizeHint())
+        self.show()
 

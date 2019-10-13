@@ -53,8 +53,19 @@ CHOCLO = {
     3: join('sprites/cultivos/choclo', 'stage_3'),
     4: join('sprites/cultivos/choclo', 'stage_4'),
     5: join('sprites/cultivos/choclo', 'stage_5'),
-    6: join('sprites/cultivos/choclo', 'stage_6')
+    6: join('sprites/cultivos/choclo', 'stage_6'),
+    7: join('sprites/cultivos/choclo', 'stage_7')
 }
+
+ALCACHOFA = {
+    1: join('sprites/cultivos/alcachofa', 'stage_1'),
+    2: join('sprites/cultivos/alcachofa', 'stage_2'),
+    3: join('sprites/cultivos/alcachofa', 'stage_3'),
+    4: join('sprites/cultivos/alcachofa', 'stage_4'),
+    5: join('sprites/cultivos/alcachofa', 'stage_5'),
+    6: join('sprites/cultivos/alcachofa', 'stage_6')
+}
+
 
 KEY_EVENT_DICT = {
         Qt.Key_D: 'R',
@@ -67,4 +78,11 @@ DINERO_INICIAL = 100
 
 DINERO_TRAMPA = 50
 
+PROB_ARBOL = 70
+PROB_ORO = 40
+
+DURACION_ORO = 40
+DURACION_LENA = 75 
+
 FONT = QFont('Times', 16)
+FONT_CHICA = QFont('Times', 8)
