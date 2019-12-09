@@ -1,0 +1,15 @@
+{
+    "PATHS": {
+        "logo": "../sprites/logo.png",
+        "fondo": "../sprites/fondos",
+        "personajes": "../sprites/personajes/",
+        "server_char": "../sprites/personajes/Male person/idle.png",
+        "usuarios": "../usuarios.json"
+    },
+    "CONNECT": {
+        "host": "localhost",
+        "puerto": 9000
+    }
+    
+}
+
